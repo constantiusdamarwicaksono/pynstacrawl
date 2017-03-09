@@ -59,7 +59,6 @@ if len(sys.argv)>1 :
 	print('instagram account for',username)
 	raw_data=get_raw_data(username,'')
 	data = decode_json(raw_data)
-	# print(data['entry_data']['ProfilePage'][0]['user']['is_private']);
 	if(data['entry_data']['ProfilePage'][0]['user']['is_private']!=True):
 		print('total pictures : '+ str(data['entry_data']['ProfilePage'][0]['user']['media']['count']))
 		print('picture links :')
@@ -70,7 +69,7 @@ if len(sys.argv)>1 :
 				last_link = picts[len(picts)-1];
 			data = decode_json(get_raw_data(username,last_link))
 			for pict in data['entry_data']['ProfilePage'][0]['user']['media']['nodes']:
-				link = pict['display_src'][0:pict['display_src'].find('?ig_cache')]
+				link = pict['display_src']
 				if(pict['is_video']==True):
 					link=get_video_data_url(pict['code'])
 				match = re.findall('(.*)s750x750/sh0.08/e35/(.*)',link,re.DOTALL)
@@ -81,7 +80,6 @@ if len(sys.argv)>1 :
 				file_name = link[link.rfind('/')+1:]
 				download_file(link,file_name,username)
 				picts.append(pict['id'])
-				# print(pict['is_video'])
 			next_page=has_next_page(data);
 		print('All done stalker !, everything downloaded at '+ username +' folder')
 	else:
