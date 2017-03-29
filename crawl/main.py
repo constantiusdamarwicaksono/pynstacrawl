@@ -1,36 +1,38 @@
 #!/usr/bin/python3
-import sys, signal, os
-from lib.instagram_link_crawler import instagram_link_crawler
-from lib.download_worker import download_worker
-from lib.crawler_exception import *
+"""
+created by damar
+"""
+import sys, signal, requests
+from lib.link_producer import Link_Producer
+from lib.link_processor import Link_Processor
 
 def signal_handler(signal, frame):
         print("\nCrawling Stopped.\n");
         sys.exit(0);
 
 def main():
-    signal.signal(signal.SIGINT, signal_handler);
-    if len(sys.argv) > 1:
-        try :
-            username = sys.argv[1];
-            c = instagram_link_crawler(username);
-            que = c.run();
-            if not os.path.isdir('./'+username):
-                os.mkdir('./'+username,0o775)
-            download_worker.que = que;
-            print('starting download');
-            threads = [];
-            for i in range(0,5):
-                worker = download_worker('thread '+str(i+1),1,username);
-                worker.start();
-                threads.append(worker);
-            for thread in threads:
-                thread.join();
-            print('all done stalker, everything stored in '+username+' folder');
-        except Exception as e:
-            print(e);
-    else:
-        print('please input username');
+	signal.signal(signal.SIGINT, signal_handler);
+	if len(sys.argv) > 1:
+		try :
+			num_downloader = 4;
+			threads = [];
+			username = sys.argv[1];
+			lp = Link_Producer(username,num_downloader);
+			lp.start();
+			threads.append(lp);
+			for i in range(0,num_downloader):
+				download_worker = Link_Processor(username);
+				download_worker.start();
+				threads.append(download_worker);
+			for thread in threads:
+				thread.join();
+			print('all done stalker, everything stored in '+username+' folder');
+		except requests.exceptions.ConnectionError as e:
+			print('Connection error, check your network connection');
+		except Exception as e :
+			print(e);
+	else:
+		print('please specify username');
 
 if __name__ == '__main__':
-    main();
+	main();

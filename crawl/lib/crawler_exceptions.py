@@ -1,6 +1,6 @@
 class private_exception(Exception):
-    def __init__(self):
-        self.message  = 'this account is private';
+    def __init__(self,username):
+        self.message  = 'sorry, but this account ('+username+') is private';
         Exception.__init__(self,self.message);
 
 class zero_photo_exception(Exception):
