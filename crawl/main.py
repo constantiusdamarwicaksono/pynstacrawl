@@ -7,7 +7,7 @@ from lib.link_producer import Link_Producer
 from lib.link_processor import Link_Processor
 
 def signal_handler(signal, frame):
-        print("\nCrawling Stopped.\n");
+        print("\nAttempting to stop crawling process!!\n");
         sys.exit(0);
 
 def main():
