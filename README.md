@@ -2,8 +2,6 @@
 
 pynstacrawl is instagram photo grabber written in python,only works on unprivate account
 
-script.py -> implementation using procedural style
-
 main.py -> implementation using oop style
 
 how to use ?
