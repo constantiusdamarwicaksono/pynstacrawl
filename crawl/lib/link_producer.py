@@ -33,7 +33,7 @@ class Link_Producer (Base_Crawler):
     def get_post_detail(self,code):
         link = self.__base_url+"p/"+code+"/";
         raw = self.decode_json(self.grab_and_extract_data(link));
-        return raw['entry_data']['PostPage'][0]['media'];
+        return raw['entry_data']['PostPage'][0]['graphql']['shortcode_media'];
 
     def has_next_page(self,list_data):
         return list_data['entry_data']['ProfilePage'][0]['user']['media']['page_info']['has_next_page'];
