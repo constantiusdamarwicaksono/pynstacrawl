@@ -1,6 +1,8 @@
 import random, time, json, requests, re, os
 from .base_crawler import Base_Crawler
 from .crawler_exceptions import *
+import browser_cookie3 as bc
+from pprint import pprint
 
 class Link_Producer (Base_Crawler):
     __name = 'Producer ';
@@ -12,6 +14,7 @@ class Link_Producer (Base_Crawler):
         self.name = self.__name+str(Link_Producer.__seq);
         self.num_downloader = num_downloader;
         self.username = username;
+        self.cookies = bc.firefox(domain_name='www.instagram.com');
         Link_Producer.__seq += 1;
         self.is_private(username);
 
@@ -19,7 +22,7 @@ class Link_Producer (Base_Crawler):
         return Link_Producer.__seq;
 
     def grab_and_extract_data(self,link):
-        raw = requests.get(link).content.decode('utf-8');
+        raw = requests.get(link,cookies=self.cookies).content.decode('utf-8');
         match = re.findall('window._sharedData = (.*?);</script>',raw,re.DOTALL);
         return match[0];
 
@@ -61,7 +64,7 @@ class Link_Producer (Base_Crawler):
             self.get_queue().put(None);
 
     def is_private(self,username):
-        if not self.get_user_endpoint(self.decode_json(self.get_raw_data('')))['is_private']:
+        if not self.get_user_endpoint(self.decode_json(self.get_raw_data('')))['is_private'] or len(self.get_user_endpoint(self.decode_json(self.get_raw_data('')))['media']['nodes']) > 0:
             try:
                 if not os.path.isdir('./'+username):
                     os.mkdir('./'+username,0o755);
