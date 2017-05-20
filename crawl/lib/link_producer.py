@@ -9,12 +9,12 @@ class Link_Producer (Base_Crawler):
     __seq = 1;
     __base_url = 'https://www.instagram.com/';
 
-    def __init__(self,username,num_downloader):
+    def __init__(self,username,num_downloader,use_cookies):
         super(Link_Producer,self).__init__();
         self.name = self.__name+str(Link_Producer.__seq);
         self.num_downloader = num_downloader;
         self.username = username;
-        self.cookies = bc.firefox(domain_name='www.instagram.com');
+        self.cookies = bc.firefox(domain_name='www.instagram.com') if use_cookies else '';
         Link_Producer.__seq += 1;
         self.is_private(username);
 

@@ -25,6 +25,7 @@ class Link_Processor(Base_Crawler):
             except:
                 return False
         else:
+            print(name+' already exists');
             return False
 
     def run(self):
