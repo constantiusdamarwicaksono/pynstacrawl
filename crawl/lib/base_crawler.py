@@ -11,8 +11,10 @@ class Base_Crawler(Thread):
     def get_queue(self):
         return self.__que;
 
+    @classmethod
     def get_exit_flag(self):
         return Base_Crawler.__exit_flag;
 
+    @classmethod
     def set_exit_flag(self,state):
         Base_Crawler.__exit_flag = state;

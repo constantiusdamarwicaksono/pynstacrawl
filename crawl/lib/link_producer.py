@@ -87,7 +87,7 @@ class Link_Producer (Base_Crawler):
         display_picture = re.findall('(.*)s(.*)/(.*)',self.get_user_endpoint(data)['profile_pic_url_hd'],re.DOTALL)[0];
         self.get_queue().put(display_picture[0]+display_picture[2]);
         next_page = True;
-        while next_page:
+        while next_page and not self.get_exit_flag():
             last_link=''
             if(len(picts)>0):
                 last_link = picts[len(picts)-1];
