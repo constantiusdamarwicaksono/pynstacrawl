@@ -1,7 +1,7 @@
 from queue import Queue
 from threading import Thread
 
-class Base_Crawler(Thread):
+class BaseCrawler(Thread):
     __que = Queue();
     __exit_flag = False;
 
@@ -13,8 +13,8 @@ class Base_Crawler(Thread):
 
     @classmethod
     def get_exit_flag(self):
-        return Base_Crawler.__exit_flag;
+        return BaseCrawler.__exit_flag;
 
     @classmethod
     def set_exit_flag(self,state):
-        Base_Crawler.__exit_flag = state;
+        BaseCrawler.__exit_flag = state;

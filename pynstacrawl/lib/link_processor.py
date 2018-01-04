@@ -1,15 +1,15 @@
 import time, os, requests
-from .base_crawler import Base_Crawler
+from .BaseCrawler import BaseCrawler
 from threading import Lock
 
-class Link_Processor(Base_Crawler):
+class LinkProcessor(BaseCrawler):
     __name = 'Downloader ';
     __seq = 1;
 
     def __init__(self,_dir):
-        super(Link_Processor,self).__init__();
+        super(LinkProcessor,self).__init__();
         self.name = self.__name + str(self.__seq);
-        Link_Processor.__seq += 1;
+        LinkProcessor.__seq += 1;
         self.dir = _dir;
         self.lock = Lock();
 

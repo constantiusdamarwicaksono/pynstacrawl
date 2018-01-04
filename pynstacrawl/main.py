@@ -1,15 +1,14 @@
-#!/usr/bin/python3
 """
 created by damar
 """
 import sys, signal, requests, argparse
-from lib.link_producer import Link_Producer
-from lib.link_processor import Link_Processor
-from lib.base_crawler import Base_Crawler
+from lib.LinkProducer import LinkProducer
+from lib.LinkProcessor import LinkProcessor
+from lib.BaseCrawler import BaseCrawler
 
 def signal_handler(signal, frame):
     print("\nAttempting to stop crawling process!!\n");
-    Base_Crawler.set_exit_flag(True);
+    BaseCrawler.set_exit_flag(True);
     sys.exit(0);
 
 def init_parser():
@@ -44,11 +43,11 @@ def main():
             num_downloader = 4;
             threads = [];
             username = args.username;
-            lp = Link_Producer(username,num_downloader,args.use_cookies);
+            lp = LinkProducer(username,num_downloader,args.use_cookies);
             lp.start();
             threads.append(lp);
             for i in range(0,num_downloader):
-                download_worker = Link_Processor(username);
+                download_worker = LinkProcessor(username);
                 download_worker.start();
                 threads.append(download_worker);
             for thread in threads:

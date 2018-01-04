@@ -1,25 +1,25 @@
 import random, time, json, requests, re, os
-from .base_crawler import Base_Crawler
+from .BaseCrawler import BaseCrawler
 from .crawler_exceptions import *
 import browser_cookie3 as bc
 from pprint import pprint
 
-class Link_Producer (Base_Crawler):
+class LinkProducer (BaseCrawler):
     __name = 'Producer ';
     __seq = 1;
     __base_url = 'https://www.instagram.com/';
 
     def __init__(self,username,num_downloader,use_cookies):
-        super(Link_Producer,self).__init__();
-        self.name = self.__name+str(Link_Producer.__seq);
+        super(LinkProducer,self).__init__();
+        self.name = self.__name+str(LinkProducer.__seq);
         self.num_downloader = num_downloader;
         self.username = username;
         self.cookies = bc.firefox(domain_name='www.instagram.com') if use_cookies else '';
-        Link_Producer.__seq += 1;
+        LinkProducer.__seq += 1;
         self.is_private(username);
 
     def get_seq(self):
-        return Link_Producer.__seq;
+        return LinkProducer.__seq;
 
     def grab_and_extract_data(self,link):
         raw = requests.get(link,cookies=self.cookies).content.decode('utf-8');
@@ -46,7 +46,7 @@ class Link_Producer (Base_Crawler):
 
     def get_user_endpoint(self,data):
         if 'ProfilePage' not in data['entry_data']:
-            raise no_account_exception;
+            raise NoAccountException;
         return data['entry_data']['ProfilePage'][0]['user'];
 
     def get_media_endpoint(self,data):
@@ -72,7 +72,7 @@ class Link_Producer (Base_Crawler):
                 print(e);
         else:
             self.set_termination_download_thread_flag();
-            raise private_exception(username);
+            raise PrivateException(username);
 
     def run(self):
         picts = [];
@@ -80,7 +80,7 @@ class Link_Producer (Base_Crawler):
         data = self.decode_json(raw_data);
         if self.get_media_endpoint(data)['count'] == 0:
             self.set_termination_download_thread_flag();
-            raise zero_photo_exception;
+            raise ZeroPhotoException;
         print('Crawling pictures from '+self.username);
         print('Total posts : '+ str(self.get_media_endpoint(data)['count']));
         print('please wait, gathering data...');
