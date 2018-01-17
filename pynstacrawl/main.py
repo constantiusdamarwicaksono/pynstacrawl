@@ -2,9 +2,9 @@
 created by damar
 """
 import sys, signal, requests, argparse
-from lib.LinkProducer import LinkProducer
-from lib.LinkProcessor import LinkProcessor
-from lib.BaseCrawler import BaseCrawler
+from lib.link_producer import LinkProducer
+from lib.link_processor import LinkProcessor
+from lib.base_crawler import BaseCrawler
 
 def signal_handler(signal, frame):
     print("\nAttempting to stop crawling process!!\n");

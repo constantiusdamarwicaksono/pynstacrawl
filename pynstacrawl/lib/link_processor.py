@@ -1,5 +1,5 @@
 import time, os, requests
-from .BaseCrawler import BaseCrawler
+from .base_crawler import BaseCrawler
 from threading import Lock
 
 class LinkProcessor(BaseCrawler):

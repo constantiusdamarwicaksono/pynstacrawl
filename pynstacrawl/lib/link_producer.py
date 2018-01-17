@@ -1,5 +1,5 @@
 import random, time, json, requests, re, os
-from .BaseCrawler import BaseCrawler
+from .base_crawler import BaseCrawler
 from .crawler_exceptions import *
 import browser_cookie3 as bc
 from pprint import pprint
