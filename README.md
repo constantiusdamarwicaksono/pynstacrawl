@@ -1,5 +1,7 @@
 #python instagram crawler
 
+note : this project broken due change on instagram data structure. will be fixed soon
+
 pynstacrawl is instagram photo grabber written in python,only works on unprivate account
 
 how to use ?
