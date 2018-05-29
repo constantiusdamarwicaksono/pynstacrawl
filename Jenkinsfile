@@ -2,10 +2,11 @@ pipeline {
   agent any
   stages {
     stage('Preparation') {
+      echo 'In preparation'
       parallel {
         stage('Preparation') {
           steps {
-            echo 'In Step Preparation'
+            echo 'First Preparation'
           }
         }
         stage('Preparation 2') {
