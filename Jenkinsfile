@@ -18,13 +18,26 @@ pipeline {
     stage('Build') {
       steps {
         echo 'In Build Step'
-	echo 'Building crawler'
+	      echo 'Building crawler'
       }
     }
     stage('Test') {
-      steps {
-        echo 'In test Step'
-	echo 'testing crawler'
+      parallel{
+        stage('API Testing'){
+          steps{
+            echo "Running api testing"
+          }
+        }
+        stage('Unit Testing'){
+          steps{
+            echo "Running Unit Testing"
+          }
+        }
+        stage('UI Testing'){
+          steps{
+            echo "Running UI Testing"
+          }
+        }
       }
     }
     stage('Result') {
