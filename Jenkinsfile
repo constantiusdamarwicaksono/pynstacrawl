@@ -18,11 +18,13 @@ pipeline {
     stage('Build') {
       steps {
         echo 'In Build Step'
+	echo 'Building crawler'
       }
     }
     stage('Test') {
       steps {
         echo 'In test Step'
+	echo 'testing crawler'
       }
     }
     stage('Result') {
